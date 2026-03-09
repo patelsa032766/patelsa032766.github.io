@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>KanjiAI</title>
-<link rel="icon" href="/favicon.ico">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/icon.png">
 
 <style>
 
@@ -19,9 +22,16 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 640px;
   text-align: center;
   padding: 20px;
+}
+
+.app-icon {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 20px;
+  border-radius: 22px;
 }
 
 h1 {
@@ -53,14 +63,22 @@ h1 {
   transform: translateY(-1px);
 }
 
+.appstore-note {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
 .footer {
   margin-top: 70px;
   font-size: 14px;
+  color: #666;
 }
 
 .footer a {
   color: #666;
   text-decoration: none;
+  margin: 0 8px;
 }
 
 .footer a:hover {
@@ -74,14 +92,22 @@ h1 {
 
 <div class="container">
 
+<img src="/icon.png" class="app-icon">
+
 <h1>KanjiAI</h1>
 
 <p class="tagline">Learn Kanji the Smart Way</p>
 
-<a class="button" href="https://patelsa032766.github.io/KanjiAI/">Open the App</a>
+<a class="button" href="/app">Open the App</a>
+
+<p class="appstore-note">
+Coming soon to the App Store
+</p>
 
 <div class="footer">
-<a href="/privacy">Privacy Policy</a>
+<a href="/privacy.html">Privacy Policy</a> ·
+<a href="/terms.html">Terms</a> ·
+<a href="/support.html">Support</a>
 </div>
 
 </div>
