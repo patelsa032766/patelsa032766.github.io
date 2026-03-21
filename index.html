@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KanjiAI — Learn Kanji the Smart Way</title>
-<meta name="description" content="KanjiAI is an offline-first iOS companion app for Duolingo learners. Study the exact kanji and vocabulary from your lessons with spaced repetition, audio, and AI-powered reading passages.">
+<title>KanjiAI — From your first kanji to reading real Japanese</title>
+<meta name="description" content="KanjiAI is a free iPhone app for Japanese learners. Build lasting kanji retention with spaced repetition, reach language immersion through AI reading passages, understand grammar in context, and track your path from JLPT N4 to N1. Fully offline. Free forever.">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,12 +21,12 @@
     --success: #16a34a;
     --warn: #d97706;
     --navy: #1a2e4a;
+    --teal: #0891b2;
+    --teal-light: #e0f2fe;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--paper);
@@ -65,14 +65,12 @@
     position: relative;
     overflow: hidden;
   }
-
   .hero-bg {
     position: absolute; inset: 0; z-index: 0;
     background:
       radial-gradient(ellipse 60% 50% at 20% 60%, rgba(79,70,229,0.06) 0%, transparent 70%),
       radial-gradient(ellipse 50% 40% at 80% 30%, rgba(37,99,200,0.05) 0%, transparent 70%);
   }
-
   .hero-kanji-bg {
     position: absolute; inset: 0; z-index: 0;
     font-family: 'Noto Sans JP', sans-serif;
@@ -80,10 +78,8 @@
     color: rgba(79,70,229,0.04);
     display: flex; align-items: center; justify-content: center;
     letter-spacing: -10px;
-    user-select: none;
-    pointer-events: none;
+    user-select: none; pointer-events: none;
   }
-
   .hero-content { position: relative; z-index: 1; max-width: 720px; }
 
   .hero-badge {
@@ -93,10 +89,8 @@
     border-radius: 20px;
     padding: 5px 14px;
     font-size: 0.75rem; font-weight: 600; color: var(--violet);
-    margin-bottom: 28px;
-    letter-spacing: 0.3px;
+    margin-bottom: 28px; letter-spacing: 0.3px;
   }
-
   .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
@@ -118,30 +112,20 @@
     margin: 0 auto 36px;
     font-weight: 400;
   }
-
   .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
 
   .btn-primary {
-    background: var(--navy);
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-size: 0.92rem;
-    font-weight: 600;
-    text-decoration: none;
+    background: var(--navy); color: #fff;
+    padding: 14px 28px; border-radius: 10px;
+    font-size: 0.92rem; font-weight: 600; text-decoration: none;
     transition: background 0.15s, transform 0.1s;
     display: inline-flex; align-items: center; gap: 8px;
   }
   .btn-primary:hover { background: var(--violet); transform: translateY(-1px); }
-
   .btn-ghost {
-    background: transparent;
-    color: var(--ink-soft);
-    padding: 14px 24px;
-    border-radius: 10px;
-    font-size: 0.92rem;
-    font-weight: 500;
-    text-decoration: none;
+    background: transparent; color: var(--ink-soft);
+    padding: 14px 24px; border-radius: 10px;
+    font-size: 0.92rem; font-weight: 500; text-decoration: none;
     border: 1.5px solid #d4d0cb;
     transition: border-color 0.15s, color 0.15s;
   }
@@ -152,23 +136,17 @@
     display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
     max-width: 760px; margin: 0 auto;
   }
-
   .preview-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px 22px;
+    background: #fff; border-radius: 16px; padding: 20px 22px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
-    text-align: center;
-    width: 180px;
+    text-align: center; width: 180px;
     border: 1.5px solid #ece9e4;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s; position: relative;
   }
   .preview-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
   .preview-card.success { border-top: 3px solid var(--success); }
   .preview-card.accent { border-top: 3px solid var(--accent); }
   .preview-card.violet { border-top: 3px solid var(--violet); }
-
   .card-kanji { font-family: 'Noto Sans JP', sans-serif; font-size: 2.6rem; color: var(--ink); line-height: 1.1; margin-bottom: 8px; }
   .card-kana { font-family: 'Noto Sans JP', sans-serif; font-size: 1.1rem; color: var(--accent); font-weight: 700; }
   .card-romaji { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--ink-muted); margin-top: 2px; }
@@ -179,75 +157,178 @@
 
   /* ── SECTIONS ── */
   section { padding: 90px 24px; }
-
   .section-inner { max-width: 1020px; margin: 0 auto; }
-
   .section-label {
     font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--violet);
-    margin-bottom: 12px;
+    text-transform: uppercase; color: var(--violet); margin-bottom: 12px;
   }
-
   h2 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(1.9rem, 4vw, 2.8rem);
-    line-height: 1.15;
-    color: var(--ink);
-    letter-spacing: -0.5px;
-    margin-bottom: 16px;
+    line-height: 1.15; color: var(--ink);
+    letter-spacing: -0.5px; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--ink-soft);
+    line-height: 1.65; max-width: 560px; margin-bottom: 52px;
   }
 
-  .section-sub {
-    font-size: 1rem;
-    color: var(--ink-soft);
-    line-height: 1.65;
-    max-width: 560px;
-    margin-bottom: 52px;
+  /* ── READING IMMERSION SECTION ── */
+  .immersion-section { background: var(--navy); }
+  .immersion-section .section-label { color: #818cf8; }
+  .immersion-section h2 { color: #fff; }
+  .immersion-section .section-sub { color: #8aa0ba; }
+
+  .passage-demo {
+    background: #0d2038;
+    border-radius: 16px;
+    padding: 28px 28px 20px;
+    border: 1px solid #253550;
+    max-width: 700px;
   }
+  .passage-meta {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #4a7a9a;
+    margin-bottom: 16px;
+  }
+  .passage-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem; color: #fff; margin-bottom: 14px;
+  }
+  .passage-title-ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.9rem; color: #8aa0ba; margin-bottom: 18px;
+  }
+  .passage-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.05rem; line-height: 2.1;
+    color: #c8d8e8;
+    margin-bottom: 20px;
+  }
+  .passage-text .known { color: #86efac; cursor: pointer; border-bottom: 1px solid rgba(134,239,172,0.3); }
+  .passage-text .new { color: #93c5fd; cursor: pointer; border-bottom: 1px solid rgba(147,197,253,0.3); }
+  .passage-legend {
+    display: flex; gap: 20px; align-items: center;
+    padding-top: 14px; border-top: 1px solid #253550;
+    font-size: 0.72rem;
+  }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .legend-item { color: #6a8aaa; display: flex; align-items: center; }
+
+  .grammar-card {
+    background: #0d2038;
+    border-radius: 12px;
+    padding: 18px 20px;
+    border: 1px solid #253550;
+    margin-top: 16px;
+  }
+  .grammar-pattern {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #818cf8;
+    margin-bottom: 8px;
+  }
+  .grammar-example {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.95rem; color: #fff; margin-bottom: 6px;
+  }
+  .grammar-explanation { font-size: 0.8rem; color: #8aa0ba; line-height: 1.55; }
+
+  .immersion-features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px; margin-top: 40px;
+  }
+  .immersion-feature {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #253550;
+    border-radius: 12px; padding: 20px;
+  }
+  .immersion-feature-icon { font-size: 1.4rem; margin-bottom: 10px; }
+  .immersion-feature-title { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .immersion-feature-desc { font-size: 0.78rem; color: #8aa0ba; line-height: 1.55; }
+
+  /* ── JLPT PATH SECTION ── */
+  .jlpt-section { background: var(--paper-2); }
+  .jlpt-path {
+    display: flex; flex-direction: column; gap: 0;
+    max-width: 680px; position: relative;
+  }
+  .jlpt-path::before {
+    content: ''; position: absolute; left: 19px; top: 24px; bottom: 24px;
+    width: 2px; background: linear-gradient(to bottom, var(--accent), var(--violet));
+    opacity: 0.25;
+  }
+  .jlpt-step {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 16px 0;
+  }
+  .jlpt-badge {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.5px;
+    position: relative; z-index: 1;
+  }
+  .badge-n4 { background: #dbeafe; color: #1d4ed8; }
+  .badge-n3 { background: #fef3c7; color: #b45309; }
+  .badge-n2 { background: var(--violet-light); color: var(--violet-dark); }
+  .badge-n1 { background: #fce7f3; color: #9d174d; }
+  .jlpt-content { padding-top: 6px; }
+  .jlpt-level { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+  .jlpt-desc { font-size: 0.83rem; color: var(--ink-soft); line-height: 1.55; }
+  .jlpt-kanjiai { font-size: 0.72rem; color: var(--accent); font-weight: 600; margin-top: 4px; }
 
   /* ── FEATURES GRID ── */
   .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-
   .feature-card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 26px 24px;
+    background: #fff; border-radius: 14px; padding: 26px 24px;
     border: 1.5px solid #ece9e4;
     transition: transform 0.18s, box-shadow 0.18s;
   }
   .feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
-
   .feature-icon { font-size: 1.8rem; margin-bottom: 14px; }
   .feature-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
   .feature-desc { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ── FREE SECTION ── */
+  .free-section { background: var(--paper); }
+  .free-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; max-width: 800px;
+  }
+  .free-card {
+    background: #fff; border-radius: 14px; padding: 28px 24px;
+    border: 1.5px solid #ece9e4;
+  }
+  .free-card-icon { font-size: 2rem; margin-bottom: 14px; }
+  .free-card-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .free-card-desc { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.65; }
+  .free-card.highlight { border-color: var(--accent); background: linear-gradient(135deg, #f8f7f4 0%, #eff6ff 100%); }
+
+  /* ── OFFLINE STRIP ── */
+  .offline-strip {
+    background: linear-gradient(135deg, var(--violet-dark) 0%, var(--violet) 100%);
+    color: #fff; text-align: center; padding: 60px 24px;
+  }
+  .offline-strip h2 { color: #fff; margin-bottom: 10px; }
+  .offline-strip p { color: rgba(255,255,255,0.75); font-size: 0.95rem; line-height: 1.65; max-width: 520px; margin: 0 auto 28px; }
 
   /* ── ROADMAP ── */
   .roadmap { background: var(--ink); color: #e8edf2; }
   .roadmap .section-inner { max-width: 860px; }
   .roadmap h2 { color: #fff; }
   .roadmap .section-sub { color: #8aa0ba; }
-
   .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-
   .phase-card {
-    background: #1a2e4a;
-    border-radius: 12px;
-    padding: 22px 20px;
-    border: 1px solid #253550;
-    position: relative;
+    background: #1a2e4a; border-radius: 12px; padding: 22px 20px;
+    border: 1px solid #253550; position: relative;
   }
-
   .phase-pill {
     display: inline-block;
     font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    padding: 3px 9px; border-radius: 20px;
-    margin-bottom: 12px;
+    padding: 3px 9px; border-radius: 20px; margin-bottom: 12px;
   }
-  .pill-now { background: #14532d; color: #86efac; }
-  .pill-soon { background: #78350f; color: #fcd34d; }
-  .pill-later { background: #312e81; color: #a5b4fc; }
-  .pill-future { background: #4a1942; color: #f0abfc; }
-
+  .pill-done   { background: #14532d; color: #86efac; }
+  .pill-now    { background: #1e3a5f; color: #93c5fd; }
+  .pill-future { background: #312e81; color: #a5b4fc; }
   .phase-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
   .phase-items { list-style: none; display: flex; flex-direction: column; gap: 6px; }
   .phase-items li { font-size: 0.78rem; color: #8aa0ba; line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
@@ -255,25 +336,12 @@
   .phase-items li.done { color: #86efac; }
   .phase-items li.done::before { content: '✓'; color: #16a34a; }
 
-  /* ── OFFLINE STRIP ── */
-  .offline-strip {
-    background: linear-gradient(135deg, var(--violet-dark) 0%, var(--violet) 100%);
-    color: #fff;
-    text-align: center;
-    padding: 60px 24px;
-  }
-  .offline-strip h2 { color: #fff; margin-bottom: 10px; }
-  .offline-strip p { color: rgba(255,255,255,0.75); font-size: 0.95rem; line-height: 1.65; max-width: 520px; margin: 0 auto 28px; }
-
   /* ── FEEDBACK ── */
   .feedback-section { background: var(--paper-2); }
   .feedback-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 36px;
+    background: #fff; border-radius: 16px; padding: 36px;
     border: 1.5px solid #ece9e4;
-    display: flex; gap: 32px; align-items: flex-start;
-    max-width: 700px;
+    display: flex; gap: 32px; align-items: flex-start; max-width: 700px;
   }
   .feedback-icon { font-size: 2.4rem; flex-shrink: 0; }
   .feedback-title { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
@@ -281,8 +349,7 @@
 
   /* ── FOOTER ── */
   footer {
-    background: var(--ink);
-    color: #4a6a8a;
+    background: var(--ink); color: #4a6a8a;
     padding: 36px 40px;
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 16px;
@@ -293,14 +360,7 @@
   .footer-links a { font-size: 0.78rem; color: #4a6a8a; text-decoration: none; transition: color 0.15s; }
   .footer-links a:hover { color: #8aa0ba; }
   .footer-copy { font-size: 0.72rem; color: #3a4a5a; }
-
-  /* ── DUOLINGO NOTE ── */
-  .duo-note {
-    font-size: 0.72rem; color: var(--ink-muted);
-    text-align: center; padding: 14px 24px;
-    background: var(--paper-2);
-    border-top: 1px solid #ddd;
-  }
+  .duo-note { font-size: 0.72rem; color: var(--ink-muted); text-align: center; padding: 14px 24px; background: var(--paper-2); border-top: 1px solid #ddd; }
 
   @media (max-width: 640px) {
     nav { padding: 12px 20px; }
@@ -308,6 +368,7 @@
     .feedback-card { flex-direction: column; gap: 16px; }
     footer { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
+    .jlpt-path::before { display: none; }
   }
 </style>
 </head>
@@ -329,10 +390,13 @@
     <span class="nav-logo-text">Kanji<span>AI</span></span>
   </a>
   <div class="nav-links">
+    <a href="#immersion">Reading</a>
     <a href="#features">Features</a>
+    <a href="#jlpt">JLPT Path</a>
+    <a href="#pricing">Free</a>
     <a href="#roadmap">Roadmap</a>
     <a href="#feedback">Feedback</a>
-    <a href="https://canny.io" target="_blank" class="nav-cta">Request a Feature →</a>
+    <a href="https://apps.apple.com/app/kanjiai/id6738595842" target="_blank" class="nav-cta">Download Free →</a>
   </div>
 </nav>
 
@@ -343,36 +407,34 @@
   <div class="hero-content">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-      Now available · Early access
+      Free to download · All features live
     </div>
-    <h1>Kanji that <em>actually</em><br>sticks with you</h1>
+    <h1>From your first kanji<br>to reading <em>real</em> Japanese</h1>
     <p class="hero-sub">
-      KanjiAI is the flashcard companion built for Duolingo Japanese learners.
-      Study the exact vocabulary from your lessons — offline, on device, with natural audio.
+      KanjiAI is not just a kanji memorisation tool — it's a complete system for understanding the language. Spaced repetition builds lasting retention. AI reading passages create genuine immersion. Grammar cards explain how Japanese actually works, sentence by sentence.
     </p>
     <div class="hero-actions">
-      <a href="https://apps.apple.com/app/id6760276989" target="_blank" rel="noopener" class="btn-primary">
+      <a href="https://apps.apple.com/app/kanjiai/id6738595842" target="_blank" class="btn-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        Download on the App Store
+        Download Free on the App Store
       </a>
-      <a href="#features" class="btn-ghost">See what's inside →</a>
+      <a href="#immersion" class="btn-ghost">See Reading Passages →</a>
     </div>
 
-    <!-- Card previews -->
     <div class="card-preview">
       <div class="preview-card accent">
         <div class="card-kanji">図書館</div>
         <div class="card-kana">としょかん</div>
         <div class="card-romaji">toshokan</div>
         <div class="card-meaning">library</div>
-        <div class="card-tag">Noun · L4·12</div>
+        <div class="card-tag">Noun</div>
       </div>
       <div class="preview-card success">
         <div class="card-kanji">早い</div>
         <div class="card-kana">はやい</div>
         <div class="card-romaji">hayai</div>
-        <div class="card-meaning">fast · early · quick</div>
-        <div class="card-tag green">✓ Correct</div>
+        <div class="card-meaning">fast · early</div>
+        <div class="card-tag green">✓ Mastered</div>
       </div>
       <div class="preview-card violet">
         <div class="card-badge">✦ TOP 10K</div>
@@ -380,8 +442,132 @@
         <div class="card-kana">いと</div>
         <div class="card-romaji">ito</div>
         <div class="card-meaning">intention · aim</div>
-        <div class="card-tag">Noun · JLPT N2</div>
+        <div class="card-tag">JLPT N2</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMMERSION / READING PASSAGES -->
+<section class="immersion-section" id="immersion">
+  <div class="section-inner">
+    <div class="section-label">Language immersion</div>
+    <h2 style="color:#fff;">Your vocabulary,<br>in real sentences</h2>
+    <p class="section-sub">AI-generated passages built from the exact words in each unit of your course. Not generic Japanese — natural sentences using the kanji and vocabulary you've already studied. This is where memorised words become understood language.</p>
+
+    <div style="display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+      <div class="passage-demo" style="flex:1; min-width:280px;">
+        <div class="passage-meta">Section 2 · Unit 4 · Narrative</div>
+        <div class="passage-title">A Book at the Festival</div>
+        <div class="passage-title-ja">お祭りの本</div>
+        <div class="passage-text">
+          はなは<span class="known">お祭り</span>に<span class="known">行く</span>ことが<span class="known">好き</span>でした。<span class="known">たくさん</span>の<span class="known">人</span>と<span class="new">にぎやか</span>な<span class="known">音</span>が<span class="known">好き</span>でした。ある<span class="known">日</span>、<span class="known">本</span>の<span class="new">屋台</span>を<span class="known">見つけ</span>ました。
+        </div>
+        <div class="passage-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:#86efac;"></span>Covered so far</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#93c5fd;"></span>New to you</span>
+          <span style="margin-left:auto; font-size:0.7rem; color:#4a7a9a;">🔊 Read aloud · Furigana</span>
+        </div>
+      </div>
+
+      <div style="flex:1; min-width:260px;">
+        <div style="font-size:0.7rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#818cf8; margin-bottom:14px;">Grammar Cards</div>
+        <div class="grammar-card">
+          <div class="grammar-pattern">Verb stem + はじめる · beginning an action</div>
+          <div class="grammar-example">読みはじめました</div>
+          <div class="grammar-explanation">Attaches to the verb stem to express starting an action. Here はな starts reading — marking the turning point of the story.</div>
+        </div>
+        <div class="grammar-card">
+          <div class="grammar-pattern">〜ようになる · coming to do / reaching a state</div>
+          <div class="grammar-example">その本を読むようになりました</div>
+          <div class="grammar-explanation">Expresses a gradual change into a new habit or state. Used here to show that reading became part of Hana's life.</div>
+        </div>
+        <div style="margin-top:18px; padding:16px 18px; background:rgba(255,255,255,0.05); border:1px solid #253550; border-radius:10px;">
+          <div style="font-size:0.75rem; font-weight:600; color:#8aa0ba; line-height:1.6;">Every passage includes 2–5 grammar patterns explained in the context of sentences you just read. Not abstract rules — grammar you've already seen in action.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="immersion-features">
+      <div class="immersion-feature">
+        <div class="immersion-feature-icon">🎯</div>
+        <div class="immersion-feature-title">Built from your vocabulary</div>
+        <div class="immersion-feature-desc">Every passage uses the kanji and words from your course units. You'll recognise most of it — with just enough new vocabulary to push you forward.</div>
+      </div>
+      <div class="immersion-feature">
+        <div class="immersion-feature-icon">📖</div>
+        <div class="immersion-feature-title">Three passage types per unit</div>
+        <div class="immersion-feature-desc">Unit Focus, Daily Life, and Narrative — each with a different style and angle. Hundreds of passages across all units, all offline.</div>
+      </div>
+      <div class="immersion-feature">
+        <div class="immersion-feature-icon">✏️</div>
+        <div class="immersion-feature-title">Grammar in context</div>
+        <div class="immersion-feature-desc">2–5 grammar cards per passage explain the patterns actually used — with verbatim example sentences you can look up word by word.</div>
+      </div>
+      <div class="immersion-feature">
+        <div class="immersion-feature-icon">🔍</div>
+        <div class="immersion-feature-title">Tap anything</div>
+        <div class="immersion-feature-desc">Tap any word for its full reading and meaning. Tap any kanji to explore its components, phonetic family, memory hooks, and related vocabulary.</div>
+      </div>
+      <div class="immersion-feature">
+        <div class="immersion-feature-icon">🔊</div>
+        <div class="immersion-feature-title">Read aloud with karaoke</div>
+        <div class="immersion-feature-desc">Apple's Enhanced Japanese voice reads the full passage aloud, highlighting each word as it's spoken — pitch accent included.</div>
+      </div>
+      <div class="immersion-feature">
+        <div class="immersion-feature-icon">✈️</div>
+        <div class="immersion-feature-title">Fully offline</div>
+        <div class="immersion-feature-desc">Passages are pre-generated and bundled with the app. No internet required — read on a plane, on the subway, anywhere.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JLPT PATH -->
+<section class="jlpt-section" id="jlpt">
+  <div class="section-inner">
+    <div class="section-label">Your path forward</div>
+    <h2>JLPT N4 to N1 —<br>a clear progression</h2>
+    <p class="section-sub">KanjiAI is built around structured vocabulary progression, giving you an objective measure of where you stand on Japan's standard language proficiency scale — independent of any single course or textbook.</p>
+
+    <div class="jlpt-path">
+      <div class="jlpt-step">
+        <div class="jlpt-badge badge-n4">N4</div>
+        <div class="jlpt-content">
+          <div class="jlpt-level">JLPT N4 — Elementary</div>
+          <div class="jlpt-desc">~1,500 words. Daily life, work, travel, basic opinions. You can have simple conversations and understand slow, clear speech. This is where structured study begins to pay off.</div>
+          <div class="jlpt-kanjiai">→ Sections 1–4 of your course, reinforced by KanjiAI's SRS review</div>
+        </div>
+      </div>
+      <div class="jlpt-step">
+        <div class="jlpt-badge badge-n3">N3</div>
+        <div class="jlpt-content">
+          <div class="jlpt-level">JLPT N3 — Intermediate</div>
+          <div class="jlpt-desc">~3,750 words. Newspapers, manga, longer conversations. The inflection point where Japanese starts to feel readable rather than decoded.</div>
+          <div class="jlpt-kanjiai">→ Sections 5–6 + Enhanced 10K expansion in KanjiAI</div>
+        </div>
+      </div>
+      <div class="jlpt-step">
+        <div class="jlpt-badge badge-n2">N2</div>
+        <div class="jlpt-content">
+          <div class="jlpt-level">JLPT N2 — Upper Intermediate</div>
+          <div class="jlpt-desc">~6,000 words. Business Japanese, news media, academic texts. Understood without needing context from the surrounding situation.</div>
+          <div class="jlpt-kanjiai">→ Top 10K expansion carries you through N2 vocabulary territory</div>
+        </div>
+      </div>
+      <div class="jlpt-step">
+        <div class="jlpt-badge badge-n1">N1</div>
+        <div class="jlpt-content">
+          <div class="jlpt-level">JLPT N1 — Advanced</div>
+          <div class="jlpt-desc">~10,000 words. Nuanced, complex Japanese across all genres. Native-level comprehension of written and spoken material.</div>
+          <div class="jlpt-kanjiai">→ The full Top 10K expansion targets this vocabulary range</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px; padding:24px 28px; background:#fff; border-radius:14px; border:1.5px solid #ece9e4; max-width:680px;">
+      <div style="font-size:0.7rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--violet); margin-bottom:10px;">Why grammar matters at every level</div>
+      <p style="font-size:0.9rem; color:var(--ink-soft); line-height:1.7;">Vocabulary gets you to N4. Grammar gets you to N1. KanjiAI's reading passages expose you to real grammar constructs — te-form connections, conditional patterns, causative-passive structures — in sentences built from words you already know. Understanding how the language fits together is what separates recognition from fluency.</p>
     </div>
   </div>
 </section>
@@ -389,40 +575,55 @@
 <!-- FEATURES -->
 <section id="features">
   <div class="section-inner">
-    <div class="section-label">What's inside</div>
-    <h2>Built around your<br>Duolingo progress</h2>
-    <p class="section-sub">Not a generic Kanji app. Every flashcard is tied to the exact section and lesson where you first encountered it in Duolingo.</p>
+    <div class="section-label">Everything in the app</div>
+    <h2>A complete study system,<br>not just flashcards</h2>
+    <p class="section-sub">KanjiAI combines spaced repetition, reading immersion, grammar understanding, and kanji analysis in one offline app. Everything works together. Nothing requires an account or internet connection.</p>
 
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <div class="feature-title">Your curriculum, not a generic list</div>
-        <div class="feature-desc">Cards are drawn from your actual Duolingo lesson range — Level 1 through whatever you've reached. Study only what you've been taught.</div>
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">Lasting kanji retention</div>
+        <div class="feature-desc">Cards are scheduled at the exact moment you're about to forget them. Spaced repetition builds long-term memory — not short-term familiarity that fades after the exam.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <div class="feature-title">AI Reading Passages</div>
+        <div class="feature-desc">Hundreds of AI-generated passages covering every unit. Three types per unit: Unit Focus, Daily Life, and Narrative. Colour-coded kanji, furigana toggle, full translation. All offline.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✏️</div>
+        <div class="feature-title">Grammar in context</div>
+        <div class="feature-desc">Every passage includes grammar cards explaining the patterns used — te-form, conditionals, aspect markers — with verbatim example sentences from the passage itself.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔬</div>
+        <div class="feature-title">Kanji deep dive</div>
+        <div class="feature-desc">Tap any kanji to explore its components, phonetic family, memory hooks, and related vocabulary. Drill recursively from complex characters all the way down to basic radicals.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">✦</div>
         <div class="feature-title">Top 10,000 word expansion</div>
-        <div class="feature-desc">Opt in to see high-frequency vocabulary up to JLPT N1, filtered to kanji you already know. Aspirational words, zero confusion.</div>
+        <div class="feature-desc">Opt in to high-frequency Japanese vocabulary up to JLPT N1, filtered to kanji you already know. Aspirational vocabulary, zero confusion.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Your curriculum, not a generic list</div>
+        <div class="feature-desc">Every card and reading passage is tied to the exact unit where you first encountered that vocabulary. Study what you've been taught, not someone else's word list.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔊</div>
-        <div class="feature-title">Natural audio on every card</div>
-        <div class="feature-desc">Bundled audio for thousands of words. Enable Apple's Enhanced Japanese voice for pitch-accurate pronunciation — free and fully on-device.</div>
+        <div class="feature-title">Pitch-accurate audio</div>
+        <div class="feature-desc">Built-in audio on every card. Enable Apple's Otoya Enhanced voice for pitch-accented pronunciation that sounds like a native speaker — free, offline, 150 MB download.</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">✈️</div>
-        <div class="feature-title">100% offline</div>
-        <div class="feature-desc">No account. No internet. No subscription required to study. Everything runs on your device — on a plane, on the subway, anywhere.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔤</div>
-        <div class="feature-title">Kana and romaji together</div>
-        <div class="feature-desc">Every card shows the kana reading large, with Hepburn romaji below. Guess by typing kana or romaji — whichever you prefer.</div>
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Mastery dashboard</div>
+        <div class="feature-desc">Track your progress across every section and unit. See which words are new, familiar, or mastered. Streak tracking keeps daily review a habit, not a chore.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📱</div>
-        <div class="feature-title">iPhone, iPad, and Mac</div>
-        <div class="feature-desc">One purchase, three devices. The study loop works identically everywhere. Keyboard shortcuts on iPad and Mac — Return to check, Escape to give up.</div>
+        <div class="feature-title">iPhone · 100% offline · No account</div>
+        <div class="feature-desc">Available on iPhone. Everything — flashcards, passages, audio, kanji data, grammar cards — runs entirely on your device. Your progress is private. No login. No subscription. No internet.</div>
       </div>
     </div>
   </div>
@@ -433,59 +634,89 @@
   <div class="section-inner" style="text-align:center;">
     <div class="section-label" style="color:rgba(255,255,255,0.5); margin-bottom:10px;">No internet required</div>
     <h2 style="font-size:2rem; margin-bottom:12px;">Study anywhere.<br>No Wi-Fi needed.</h2>
-    <p>KanjiAI bundles the entire curriculum on your device. Audio, flashcards, readings — everything works offline. Your progress is private and stays on your device.</p>
-    <a href="https://apps.apple.com/app/id6760276989" target="_blank" rel="noopener" class="btn-primary" style="background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3);">Get KanjiAI →</a>
+    <p>KanjiAI bundles the entire curriculum — flashcards, reading passages, grammar cards, audio, kanji data — on your device. Your progress is private and stays with you.</p>
+    <a href="https://apps.apple.com/app/kanjiai/id6738595842" target="_blank" class="btn-primary" style="background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3);">Download Free →</a>
   </div>
 </div>
+
+<!-- PRICING / FREE MODEL -->
+<section class="free-section" id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Free forever</div>
+    <h2>Free. Forever.</h2>
+    <p class="section-sub">No trial period. No feature paywalls. No subscription. KanjiAI is free to download and free to use — every feature, always.</p>
+
+    <div class="free-grid" style="grid-template-columns: 1fr;">
+      <div class="free-card highlight">
+        <div class="free-card-icon">✓</div>
+        <div class="free-card-title">Everything, free — no catch</div>
+        <div class="free-card-desc">Spaced repetition, AI reading passages, grammar cards, kanji deep dive, Top 10K expansion, pitch-accurate audio, mastery dashboard, streak tracking — all included. On your iPhone. No account needed. No subscription. No expiry.</div>
+      </div>
+    </div>
+
+    <p style="font-size:0.8rem; color:var(--ink-muted); margin-top:24px; max-width:640px; line-height:1.6;">KanjiAI will always be free. More features are in development — they'll be free too.</p>
+  </div>
+</section>
 
 <!-- ROADMAP -->
 <section class="roadmap" id="roadmap">
   <div class="section-inner">
-    <div class="section-label" style="color:#818cf8;">What's coming</div>
+    <div class="section-label" style="color:#818cf8;">What's shipped · What's next</div>
     <h2>Built in phases,<br>shipped continuously</h2>
-    <p class="section-sub">KanjiAI is in active development. Here's exactly where things stand and what's coming next.</p>
+    <p class="section-sub">KanjiAI is in active development. All core features are live. More is coming — shaped by what learners actually ask for.</p>
 
     <div class="roadmap-grid">
       <div class="phase-card">
-        <span class="phase-pill pill-now">Now · v1.0</span>
+        <span class="phase-pill pill-done">Shipped · V1.0</span>
         <div class="phase-title">Flashcard foundation</div>
         <ul class="phase-items">
-          <li class="done">Study Setup with Duolingo lesson range</li>
+          <li class="done">Study setup with lesson range picker</li>
           <li class="done">Full flashcard loop with audio</li>
           <li class="done">Top 10,000 word expansion</li>
           <li class="done">Part-of-speech filtering</li>
           <li class="done">Kana + romaji on every card</li>
-          <li class="done">iPhone, iPad, Mac support</li>
+          <li class="done">iPhone</li>
         </ul>
       </div>
       <div class="phase-card">
-        <span class="phase-pill pill-soon">Phase 2 · V1.1</span>
+        <span class="phase-pill pill-done">Shipped · V1.1–V1.2</span>
         <div class="phase-title">Smart scheduling</div>
         <ul class="phase-items">
-          <li>Spaced repetition — cards due when you're about to forget</li>
-          <li>Daily streak tracking</li>
-          <li>Progress dashboard by Level and Lesson</li>
-          <li>Readiness indicators — know when to expand your range</li>
+          <li class="done">Spaced repetition — cards due when you're about to forget</li>
+          <li class="done">Daily streak tracking</li>
+          <li class="done">Progress dashboard by section and unit</li>
+          <li class="done">Readiness indicators — know when to expand your range</li>
         </ul>
       </div>
       <div class="phase-card">
-        <span class="phase-pill pill-later">Phase 3 · Planned</span>
+        <span class="phase-pill pill-done">Shipped · V1.3</span>
         <div class="phase-title">Kanji deep dive</div>
         <ul class="phase-items">
-          <li>Tap any kanji on a card → full detail page</li>
-          <li>Component breakdown with recursive navigation</li>
-          <li>Memory hooks and mnemonics</li>
-          <li>Words you know that share each kanji</li>
+          <li class="done">Tap any kanji → full detail sheet</li>
+          <li class="done">Component breakdown, recursive navigation</li>
+          <li class="done">Phonetic series — shared sound components</li>
+          <li class="done">Memory hooks and mnemonics</li>
+          <li class="done">Words you know that share each kanji</li>
         </ul>
       </div>
       <div class="phase-card">
-        <span class="phase-pill pill-future">Phase 4 · Future</span>
-        <div class="phase-title">Reading & AI</div>
+        <span class="phase-pill pill-done">Shipped · V1.4</span>
+        <div class="phase-title">Reading & immersion</div>
         <ul class="phase-items">
-          <li>AI-generated reading passages on topics you choose</li>
-          <li>Uses only kanji and vocab you already know</li>
-          <li>Furigana, tap-to-translate, difficulty scaling</li>
-          <li>Writing practice with stroke recognition</li>
+          <li class="done">AI-generated passages for every unit</li>
+          <li class="done">Grammar cards with verbatim examples</li>
+          <li class="done">Furigana toggle, colour-coded kanji</li>
+          <li class="done">Tap-to-translate words and kanji</li>
+          <li class="done">TTS read-aloud with karaoke highlighting</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <span class="phase-pill pill-future">Coming next</span>
+        <div class="phase-title">More to come</div>
+        <ul class="phase-items">
+          <li>More ways to engage with Japanese</li>
+          <li>Deeper personalisation based on your progress</li>
+          <li>Shaped by what you ask for — tell us on the board</li>
         </ul>
       </div>
     </div>
@@ -497,23 +728,23 @@
   <div class="section-inner">
     <div class="section-label">Help shape KanjiAI</div>
     <h2>Your feedback<br>builds the roadmap</h2>
-    <p class="section-sub">KanjiAI is in early access. Every bug report and feature request goes directly to the developer. Vote on what matters most to you.</p>
+    <p class="section-sub">KanjiAI is in active development. Every bug report and feature request goes directly to the developer. Vote on what matters most to you.</p>
 
     <div style="display:flex; gap:20px; flex-wrap:wrap;">
       <div class="feedback-card">
         <div class="feedback-icon">💡</div>
         <div>
           <div class="feedback-title">Request a feature or upvote ideas</div>
-          <div class="feedback-desc">See what other learners are asking for. Vote on the features you want most — the most popular ones get built first. No account required to browse.</div>
-          <a href="https://canny.io" target="_blank" class="btn-primary" style="font-size:0.82rem; padding:10px 20px;">Open Feature Board →</a>
+          <div class="feedback-desc">See what other learners are asking for. Vote on the features you want most — the most popular ones get built first.</div>
+          <a href="https://kanjiai.canny.io/feature-requests" target="_blank" class="btn-primary" style="font-size:0.82rem; padding:10px 20px;">Open Feature Board →</a>
         </div>
       </div>
       <div class="feedback-card" style="max-width:700px;">
         <div class="feedback-icon">🐛</div>
         <div>
           <div class="feedback-title">Found a bug?</div>
-          <div class="feedback-desc">Report it on the same board — tag it as a bug. Include your iOS version and what you expected to happen. We fix bugs before shipping new features.</div>
-          <a href="https://canny.io" target="_blank" class="btn-ghost" style="font-size:0.82rem; padding:10px 20px; display:inline-block; margin-top:0;">Report a Bug →</a>
+          <div class="feedback-desc">Report it on the same board — tag it as a bug. Include your iOS version and what you expected to happen. Bugs are fixed before new features ship.</div>
+          <a href="https://kanjiai.canny.io/bug-reports" target="_blank" class="btn-ghost" style="font-size:0.82rem; padding:10px 20px; display:inline-block; margin-top:0;">Report a Bug →</a>
         </div>
       </div>
     </div>
@@ -527,131 +758,16 @@
 <footer>
   <div class="footer-logo">Kanji<span>AI</span> · kanjiai.app</div>
   <div class="footer-links">
+    <a href="#immersion">Reading</a>
     <a href="#features">Features</a>
+    <a href="#jlpt">JLPT Path</a>
+    <a href="#pricing">Free</a>
     <a href="#roadmap">Roadmap</a>
     <a href="#feedback">Feedback</a>
-    <a href="/cdn-cgi/l/email-protection#553d3039393a153e343b3f3c343c7b342525">Contact</a>
+    <a href="mailto:hello@kanjiai.app">Contact</a>
   </div>
-  <div class="footer-copy">© 2026 Samir Patel · Independent dev
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>KanjiAI</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="apple-touch-icon" href="/icon.png">
-
-<style>
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: linear-gradient(180deg,#f7f7f7,#ececec);
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.container {
-  max-width: 640px;
-  text-align: center;
-  padding: 20px;
-}
-
-.app-icon {
-  width: 96px;
-  height: 96px;
-  margin-bottom: 20px;
-  border-radius: 22px;
-}
- -->
-h1 {
-  font-size: 48px;
-  margin-bottom: 8px;
-  letter-spacing: -0.02em;
-}
-
-.tagline {
-  font-size: 20px;
-  color: #666;
-  margin-bottom: 40px;
-}
-
-.button {
-  display: inline-block;
-  padding: 14px 32px;
-  background: #000;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all .2s ease;
-}
-
-.button:hover {
-  opacity: .85;
-  transform: translateY(-1px);
-}
-
-.appstore-note {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #666;
-}
-
-.footer {
-  margin-top: 70px;
-  font-size: 14px;
-  color: #666;
-}
-
-.footer a {
-  color: #666;
-  text-decoration: none;
-  margin: 0 8px;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<img src="/icon.png" class="app-icon">
-
-<h1>KanjiAI</h1>
-
-<p class="tagline">Learn Kanji the Smart Way</p>
-
-<a class="button" href="/app">Open the App</a>
-
-<p class="appstore-note">
-Coming soon to the App Store
-</p>
-
-<div class="footer">
-<a href="/privacy.html">Privacy Policy</a> ·
-<a href="/terms.html">Terms</a> ·
-<a href="/support.html">Support</a>
-</div>
-
-</div>
-
-</body>
-</html>
-
-  </div>
+  <div class="footer-copy">© 2026 Samir Patel · Independent developer</div>
 </footer>
+
 </body>
 </html>
